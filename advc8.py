@@ -41,28 +41,10 @@ map = {}
 #returns the digit that maps to the segment string above "disp"
 def check_digit(s):
     global disp
-    if disp[0] == ''.join(sorted(s)):
-        return 0
-    elif disp[1] == ''.join(sorted(s)):
-        return 1
-    elif disp[2] == ''.join(sorted(s)):
-        return 2
-    elif disp[3] == ''.join(sorted(s)):
-        return 3
-    elif disp[4] == ''.join(sorted(s)):
-        return 4
-    elif disp[5] == ''.join(sorted(s)):
-        return 5
-    elif disp[6] == ''.join(sorted(s)):
-        return 6
-    elif disp[7] == ''.join(sorted(s)):
-        return 7
-    elif disp[8] == ''.join(sorted(s)):
-        return 8
-    elif disp[9] == ''.join(sorted(s)):
-        return 9
-    else:
-        return None
+    for i in range(10):
+        if disp[i] == ''.join(sorted(s)):
+            return i
+    return None
 
 def translate(inputs):
     global disp
