@@ -2,6 +2,25 @@ import numpy as np
 import time
 from funcy import print_calls
 
+#           0:      1:      2:      3:      4:
+#          aaaa    ....    aaaa    aaaa    ....
+#         b    c  .    c  .    c  .    c  b    c
+#         b    c  .    c  .    c  .    c  b    c
+#          ....    ....    dddd    dddd    dddd
+#         e    f  .    f  e    .  .    f  .    f
+#         e    f  .    f  e    .  .    f  .    f
+#          gggg    ....    gggg    gggg    ....
+#         
+#           5:      6:      7:      8:      9:
+#          aaaa    aaaa    aaaa    aaaa    aaaa
+#         b    .  b    .  .    c  b    c  b    c
+#         b    .  b    .  .    c  b    c  b    c
+#          dddd    dddd    ....    dddd    dddd
+#         .    f  e    f  .    f  e    f  .    f
+#         .    f  e    f  .    f  e    f  .    f
+#          gggg    gggg    ....    gggg    gggg
+
+#python interpretation of the above 7 seven segment display is stored in disp
 disp = {}
 disp[0] = "abcefg"
 disp[6] = "abdefg"
@@ -16,8 +35,10 @@ disp[4] = "bcdf"
 disp[7] = "acf"
 disp[8] = "abcdefg"
 
+#The problem states the segments are wrongly wired. Figure out the wiring and store in map
 map = {}
-#returs the digit that maps to the segment string above "disp"
+
+#returns the digit that maps to the segment string above "disp"
 def check_digit(s):
     global disp
     if disp[0] == ''.join(sorted(s)):
@@ -69,7 +90,7 @@ def translate(inputs):
     #print("a mapped to: " + a)
     map[a] = 'a'
 
-    #all four letters of 4 are present in 9
+    #all four segments of 4 are present in 9
     #Go through all items in 6word list and pull out 9
     count = 0
     nine = ''
