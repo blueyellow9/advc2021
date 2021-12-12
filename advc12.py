@@ -3,39 +3,11 @@ import re
 from collections import defaultdict
 print ("Welcome to Python Puzzle 2, 2020")
 
-#Regular expressions that need to be matched
-PW_REGEX = re.compile(r"(\d+),(\d+) -> (\d+),(\d+)")
-
-#Empty matrix
-matrix = []
-
 #function to read input file
 def read_file(filename):
     with open(filename) as fin:
         data = [i.strip() for i in fin]
     return data
-
-#initialize a WxD matrix with values 0
-def create_matrix(matrix, WIDTH, DEPTH):
-    array = []
-    for i in range(WIDTH):
-        array.append(0)
-    for j in range(DEPTH):
-        matrix.append(array.copy())
-
-def get_adjcs(WIDTH, DEPTH, x, y, mode=0):
-    adjs = []
-    if (mode == 0):
-        #horizontal vertical and diagonal
-        adjs_list = [[0,-1], [0,1], [-1,-1], [-1,0], [-1,1], [1,-1], [1,0], [1,1]]
-    else:
-        #only horizontal and vertical
-        adjs_list = [[0,-1], [0,1], [-1,0], [1,0]]
-    for i in adjs_list:
-        rr,cc = x+i[0], y+i[1]
-        if (rr >= 0 and rr < DEPTH and cc >= 0 and cc < WIDTH):
-            adjs.append([rr,cc])
-    return adjs
 
 count = 0
 
@@ -49,25 +21,26 @@ def travel(path, f, t, paths, visited):
         else:
             visited[t] = 1
 
-    pos = t
-    if (pos == "end"):
+    current_position = t
+    if (current_position == "end"):
         #print("Path taken: " + path)
         count = count + 1
         return
 
-    if pos in paths.keys():
-        for item in paths[pos]:
-                if item == "start":
-                    visited[item] = 1
+    if current_position in paths.keys():
+        for destination in paths[current_position]:
+                if destination == "start":
+                    visited[destination] = 1
                 #for upper case big caves you can visit as many times as you want
-                elif item.isupper():
-                    travel(path, pos, item, paths, visited.copy())
+                elif destination.isupper():
+                    travel(path, current_position, destination, paths, visited.copy())
                 #if any small cave as been visited twice, skip
+                #Comment below two lines for part 1 implementation
                 elif "smallcaves_twice" not in visited.keys():
-                    travel(path, pos, item, paths, visited.copy())
+                    travel(path, current_position, destination, paths, visited.copy())
                 #if the small cave has not peen visited or been visited only once
-                elif item not in visited.keys():
-                    travel(path, pos, item, paths, visited.copy())
+                elif destination not in visited.keys():
+                    travel(path, current_position, destination, paths, visited.copy())
 
 def main():
     paths = {}
